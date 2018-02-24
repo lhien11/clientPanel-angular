@@ -19,4 +19,8 @@ export class ClientService {
     return this.clients;
   }
 
+  addClient(clientData){
+    this.af.list('/clients').push(clientData);
+  }
+
 }

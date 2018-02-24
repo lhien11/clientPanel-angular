@@ -1,6 +1,6 @@
-export interface Client {
+export interface Client{
     $key?:string;
-    fireName?:string;
+    firstName?:string;
     lastName?:string;
     email?:string;
     phone?:string;
