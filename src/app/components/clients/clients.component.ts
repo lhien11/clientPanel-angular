@@ -7,7 +7,7 @@ import { Client } from './../../models/Client';
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.css']
 })
-export class ClientComponent implements OnInit {
+export class ClientsComponent implements OnInit {
   clients: any[];
   totalOwed: number;
 
