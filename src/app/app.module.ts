@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+import { environment} from '../environments/environment';
+
 
 // AngularFire Imports 
 import { AngularFireModule } from 'angularfire2';
@@ -24,22 +26,17 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 // Service Imports 
 import { ClientService } from './services/client.service';
+import { AuthService } from './services/auth.service';
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'add-client', component: AddClientComponent}
+  { path: 'add-client', component: AddClientComponent },
+  { path: 'client/:id', component: ClientDetailsComponent },
+  { path: 'edit-client/:id', component: EditClientComponent },
+
 ];
-
-export const firebaseConfig = {
-    apiKey: "AIzaSyA7A23M_coDzW-zmlBtEz-jQQDWTgdu4J8",
-    authDomain: "clientpanel-b6b0e.firebaseapp.com",
-    databaseURL: "https://clientpanel-b6b0e.firebaseio.com",
-    storageBucket: "clientpanel-b6b0e.appspot.com",
-    messagingSenderId: "497332413797"
-}
-
 
 @NgModule({
   declarations: [
@@ -60,14 +57,15 @@ export const firebaseConfig = {
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebase, 'clientpanel'),
     FlashMessagesModule
   ],
   providers: [
     AngularFireAuth,
     AngularFireDatabase,
     ClientService,
-    FlashMessagesService
+    FlashMessagesService,
+    AuthService
     ],
   bootstrap: [AppComponent]
 })

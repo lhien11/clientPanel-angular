@@ -1,8 +1,8 @@
-export interface Client{
-    $key?:string;
-    firstName?:string;
-    lastName?:string;
-    email?:string;
-    phone?:string;
-    balance?:number;
+export interface Client {
+    key?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    balance?: number;
 }

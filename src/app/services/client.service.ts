@@ -6,21 +6,39 @@ import { Client } from './../models/Client';
 
 @Injectable()
 export class ClientService {
-  clients: Observable<Client[]>;
-  client: AngularFireObject<any>;
+  clientsRef: AngularFireList<any>
+  clients: Observable<any[]>;
+  client: Observable<any>;
 
-  constructor(
-    public af:AngularFireDatabase
-  ) { 
-    this.clients = this.af.list('/clients').valueChanges();
+  constructor(private af: AngularFireDatabase) {
+    this.clientsRef = this.af.list('clients');
+    // snapshotChanges() needed to get the key
+    this.clients = this.clientsRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
   }
 
   getClients(){
     return this.clients;
   }
 
-  addClient(clientData){
-    this.af.list('/clients').push(clientData);
+  addClient(client:Client){
+    this.clientsRef.push(client);
   }
+
+  getClient(id:string){
+    this.client = this.af.object('/clients/'+id).valueChanges();
+    return this.client;
+  }
+
+  updateClient(id:string, client: Client){
+    return this.clientsRef.update(id, client);
+  }
+
+  deleteClient(id: string){
+    return this.clientsRef.remove(id);
+  }
+  
+
 
 }
